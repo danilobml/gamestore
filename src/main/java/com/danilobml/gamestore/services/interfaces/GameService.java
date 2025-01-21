@@ -8,4 +8,5 @@ import com.danilobml.gamestore.dto.GameMinDTO;
 public interface GameService {
     List<GameMinDTO> findAll();
     GameDTO findById(long id);
+    List<GameMinDTO> searchByList(Long listId);
 }

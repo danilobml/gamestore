@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.danilobml.gamestore.dto.GameDTO;
 import com.danilobml.gamestore.dto.GameMinDTO;
 import com.danilobml.gamestore.entities.Game;
+import com.danilobml.gamestore.projections.GameMinProjection;
 import com.danilobml.gamestore.repositories.GameRepository;
 import com.danilobml.gamestore.services.interfaces.GameService;
 
@@ -30,6 +31,14 @@ public class GameServiceImpl implements GameService {
     public GameDTO findById(long id) {
         Game game = gameRepository.findById(id).orElse(null);
         return game != null ? new GameDTO(game) : null;
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> searchByList(Long listId) {
+        List<GameMinProjection> projectionList = gameRepository.searchByList(listId);
+        return projectionList.stream()
+            .map(projection -> new GameMinDTO(projection))
+            .toList();
     }
 
 }
