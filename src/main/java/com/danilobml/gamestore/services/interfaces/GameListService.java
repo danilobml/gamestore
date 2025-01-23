@@ -6,4 +6,5 @@ import com.danilobml.gamestore.dto.GameListDTO;
 
 public interface GameListService {
     List<GameListDTO> findAll();
+    void move(Long listId, int sourceIndex, int destinationIndex);
 }
