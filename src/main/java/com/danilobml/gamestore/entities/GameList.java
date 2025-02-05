@@ -3,11 +3,13 @@ package com.danilobml.gamestore.entities;
 import java.util.Objects;
 
 import io.micrometer.common.lang.NonNull;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tb_game_list")
@@ -16,14 +18,16 @@ public class GameList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NonNull
+    @NotBlank(message = "The name cannot be blank.")
+    @Column(unique = true)
     private String name;
 
     public GameList() {
     }
 
-    public GameList(long id, String name) {
-        this.id = id;
+    public GameList(String name) {
         this.name = name;
     }
 

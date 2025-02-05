@@ -1,8 +1,5 @@
 package com.danilobml.gamestore.dto;
 
-import org.springframework.beans.BeanUtils;
-
-import com.danilobml.gamestore.entities.Game;
 import com.danilobml.gamestore.validation.Genre;
 
 import jakarta.validation.constraints.Max;
@@ -10,10 +7,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class GameDTO {
-    
-    private long id;
-    
+public class GameCreateDTO {
+ 
     @NotBlank(message = "The title cannot be blank")
     private String title;
 
@@ -38,11 +33,10 @@ public class GameDTO {
     private String shortDescription;
     private String longDescription;
 
-    public GameDTO() {
+    public GameCreateDTO() {
     }
 
-    public GameDTO(long id, String title, int year, String genre, String platforms, double score, String imgUrl, String shortDescription, String longDescription) {
-        this.id = id;
+    public GameCreateDTO(String title, int year, String genre, String platforms, double score, String imgUrl, String shortDescription, String longDescription) {
         this.title = title;
         this.year = year;
         this.genre = genre;
@@ -51,19 +45,6 @@ public class GameDTO {
         this.imgUrl = imgUrl;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
-    }
-
-    
-    public GameDTO(Game entity) {
-        BeanUtils.copyProperties(entity, this);
-    }
-
-    public long getId() {
-        return this.id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getTitle() {
