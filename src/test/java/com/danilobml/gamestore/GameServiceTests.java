@@ -26,6 +26,7 @@ import com.danilobml.gamestore.repositories.GameRepository;
 import com.danilobml.gamestore.services.GameServiceImpl;
 import com.danilobml.gamestore.projections.GameMinProjection;
 
+
 @RunWith(MockitoJUnitRunner.class)
 public class GameServiceTests {
 
