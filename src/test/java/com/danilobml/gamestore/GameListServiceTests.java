@@ -83,5 +83,4 @@ public class GameListServiceTests {
 
         verify(gameListRepository, times(1)).delete(list);     
     }
-
 }
