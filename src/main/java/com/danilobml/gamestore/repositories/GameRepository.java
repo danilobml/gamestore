@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.danilobml.gamestore.entities.Game;
 import com.danilobml.gamestore.projections.GameMinProjection;
@@ -20,5 +21,9 @@ public interface GameRepository extends JpaRepository<Game, Long> {
             ORDER BY tb_belonging.position
             """)
     List<GameMinProjection> searchByList(Long listId);
+
+    
+    @Query(nativeQuery = true, value = "SELECT list_id FROM tb_belonging WHERE game_id = :gameId")
+    List<Long> findListIdsByGameId(@Param("gameId") Long gameId);
 
 }

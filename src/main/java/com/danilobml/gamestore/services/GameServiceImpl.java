@@ -12,6 +12,7 @@ import com.danilobml.gamestore.dto.GameMinDTO;
 import com.danilobml.gamestore.entities.Game;
 import com.danilobml.gamestore.exceptions.GameNotFoundException;
 import com.danilobml.gamestore.projections.GameMinProjection;
+import com.danilobml.gamestore.repositories.GameListRepository;
 import com.danilobml.gamestore.repositories.GameRepository;
 import com.danilobml.gamestore.services.interfaces.GameService;
 
@@ -20,6 +21,9 @@ public class GameServiceImpl implements GameService {
     
     @Autowired
     private GameRepository gameRepository;
+
+    @Autowired
+    private GameListRepository gameListRepository;
 
     @Transactional(readOnly = true)
     public List<GameMinDTO> findAll() {
@@ -72,6 +76,10 @@ public class GameServiceImpl implements GameService {
     public void deleteGame(Long id) {
         Game game = gameRepository.findById(id)
             .orElseThrow(() -> new GameNotFoundException(id));
+        List<Long> listIds = gameRepository.findListIdsByGameId(id);
+        for (Long listId : listIds) {
+            gameListRepository.removeGameFromList(listId, id);
+        }
         gameRepository.delete(game);
     }
 

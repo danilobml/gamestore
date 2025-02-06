@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.1</version>
+		<version>3.4.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.danilobml</groupId>
 	<artifactId>gamestore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gamestore</name>
-	<description>Demo project for Spring Boot</description>
+	<description>REST API to manage game collections</description>
 	<url />
 	<licenses>
 		<license />
@@ -83,8 +83,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.1.0</version> <!--$NO-MVN-MAN-VER$ -->
+				<artifactId>maven-resources-plugin</artifactId> <!--$NO-MVN-MAN-VER$ -->
 			</plugin>
 		</plugins>
 	</build>

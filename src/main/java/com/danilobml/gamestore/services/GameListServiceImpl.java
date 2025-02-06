@@ -53,6 +53,10 @@ public class GameListServiceImpl implements GameListService {
     public void deleteList(Long id) {
         GameList gameList = gameListRepository.findById(id)
             .orElseThrow(() -> new ListNotFoundException(id));
+        List<GameMinProjection> gamesInList = gameRepository.searchByList(id);
+        for (GameMinProjection game : gamesInList) {
+            gameListRepository.removeGameFromList(id, game.getId());
+        }
         gameListRepository.delete(gameList);
     }
 
