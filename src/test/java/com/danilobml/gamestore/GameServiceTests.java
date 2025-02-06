@@ -40,7 +40,7 @@ public class GameServiceTests {
     private GameMinProjection gameProjection2;
 
     @Test
-    public void getAllGamesTest() {
+    public void findAllGamesTest() {
         when(gameRepository.findAll()).thenReturn(Arrays.asList(
                 new Game(1, "Test 1", 2020, "Platform", "PS5", 7.9, "www.testimage.com", "Short description1",
                         "Long description1"),
@@ -54,7 +54,7 @@ public class GameServiceTests {
     }
 
     @Test
-    public void getGameByIdTest() {
+    public void findGameByIdTest() {
         Long existentId = 1L;
         Long nonExistentId = 999L;
         Game game = new Game(existentId, "Test 1", 2020, "Platform", "PS5", 7.9, "www.testimage.com",
