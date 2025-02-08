@@ -1,47 +1,35 @@
 package com.danilobml.gamestore.security.filters;
 
-import java.io.IOException;
-import java.util.Arrays;
-
+import com.danilobml.gamestore.security.config.JWTUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.danilobml.gamestore.security.SecurityConstants;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-public class JWTAuthorizationFilter extends OncePerRequestFilter{
-    
-    @SuppressWarnings("null")
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-        String header = request.getHeader("Authorization");
-        
-        if(header == null || !header.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        
-        String token = header.replace("Bearer ", "");
-        
-        String user = JWT.require(Algorithm.HMAC512(SecurityConstants.JWT_SECRET))
-            .build()
-            .verify(token)
-            .getSubject();
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, Arrays.asList());
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        filterChain.doFilter(request, response);
+    public JWTAuthorizationFilter() {
+        super(authentication -> authentication);
     }
 
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        String token = request.getHeader("Authorization");
+        if (token == null || !token.startsWith("Bearer ")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        String username = JWTUtil.extractUsername(token.replace("Bearer ", ""));
+        if (username != null) {
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(username, null, null));
+        }
+        chain.doFilter(request, response);
+    }
 }

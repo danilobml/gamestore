@@ -5,8 +5,8 @@
     "description": "Different origins (URIs) for cross-origin access"
   },
   {
-    "name": "application.jwt.secret",
+    "name": "security.jwt.secret",
     "type": "java.lang.String",
-    "description": "Secret for JWT confection"
+    "description": "Secret for JWT creation"
   }
 ]}

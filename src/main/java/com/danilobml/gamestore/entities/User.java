@@ -1,59 +1,71 @@
 package com.danilobml.gamestore.entities;
 
-import io.micrometer.common.lang.NonNull;
+import java.util.Collection;
+import java.util.Collections;
+
+import org.springframework.lang.NonNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.danilobml.gamestore.security.config.Roles;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
-    
+public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private Long id;
 
     @NonNull
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @NonNull
     @Column(nullable = false)
     private String password;
 
-    public User() {
+    @Enumerated(EnumType.STRING)
+    private Roles role = Roles.USER;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList();
     }
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public Long getId() {
-        return this.id;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }
