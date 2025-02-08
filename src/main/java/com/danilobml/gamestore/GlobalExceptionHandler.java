@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.danilobml.gamestore.exceptions.EntityNotFoundException;
 import com.danilobml.gamestore.exceptions.GameAlreadyExistsInListException;
 import com.danilobml.gamestore.exceptions.GameNotFoundException;
 import com.danilobml.gamestore.exceptions.GameNotFoundInListException;
@@ -24,6 +25,11 @@ public class GlobalExceptionHandler {
             errors.put(error.getField(), error.getDefaultMessage())
         );
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({EntityNotFoundException.class})
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({GameNotFoundException.class})
