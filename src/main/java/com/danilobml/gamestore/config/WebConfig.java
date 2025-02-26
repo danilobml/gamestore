@@ -18,7 +18,7 @@ public class WebConfig {
 			@SuppressWarnings("null")
             @Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedMethods("*").allowedOrigins(corsOrigins);
+				registry.addMapping("/**").allowedMethods("*").allowedOriginPatterns(corsOrigins);
 			}
 		};
 	}
