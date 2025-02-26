@@ -12,9 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.danilobml.gamestore.security.filters.ExceptionHandlerFilter;
 import com.danilobml.gamestore.security.filters.JWTAuthenticationFilter;
@@ -53,8 +50,8 @@ public class SecurityConfig {
         JWTAuthorizationFilter jwtAuthorizationFilter = new JWTAuthorizationFilter();
 
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
+                .requiresChannel(channel -> channel.anyRequest().requiresInsecure())
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**", "/users/register", "/swagger-ui/**", "/swagger/**", SecurityConstants.LOGIN_PATH).permitAll()
@@ -66,18 +63,5 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    configuration.addAllowedOriginPattern("*");
-    configuration.addAllowedMethod("*");
-    configuration.addAllowedHeader("*");
-    configuration.setAllowCredentials(true);
-
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-}
 
 }
