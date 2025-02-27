@@ -5,14 +5,14 @@
 ### Build tools: Maven, Docker
 
 ## Live deployed (with CI/CD):
-[https://www.delicious-hanni-danilobml-c0cd7d80.koyeb.app](https://delicious-hanni-danilobml-c0cd7d80.koyeb.app/swagger-ui/index.html)
+[http://delicious-hanni-danilobml-c0cd7d80.koyeb.app](http://delicious-hanni-danilobml-c0cd7d80.koyeb.app/swagger-ui/index.html)
 
 ## Swagger-UI OpenApi docs:
 [https://www.delicious-hanni-danilobml-c0cd7d80.koyeb.app/swagger-ui/index.html](https://delicious-hanni-danilobml-c0cd7d80.koyeb.app/swagger-ui/index.html)
 
 ## To Test:
 ### Login:
--Do a POST request to [https://www.delicious-hanni-danilobml-c0cd7d80.koyeb.app/users/login](https://delicious-hanni-danilobml-c0cd7d80.koyeb.app/users/login), with a request body in JSON format consisting in: 
+-Do a POST request to [http://delicious-hanni-danilobml-c0cd7d80.koyeb.app/users/login](http://delicious-hanni-danilobml-c0cd7d80.koyeb.app/users/login), with a request body in JSON format consisting in: 
 
 {
     "username": "test-user",
