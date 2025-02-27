@@ -22,6 +22,7 @@ import com.danilobml.gamestore.security.filters.ExceptionHandlerFilter;
 import com.danilobml.gamestore.security.filters.JWTAuthenticationFilter;
 import com.danilobml.gamestore.security.filters.JWTAuthorizationFilter;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -64,7 +65,16 @@ public class SecurityConfig {
                 .requiresChannel(channel -> channel.anyRequest().requiresInsecure())
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**", "/users/register", "/swagger-ui/**", "/swagger/**", SecurityConstants.LOGIN_PATH).permitAll()
+                .requestMatchers(
+                    "/h2-console/**",
+                    "/users/register",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/v3/api-docs/**",
+                    "/docs/**",
+                    "/swagger/**",
+                    SecurityConstants.LOGIN_PATH
+                ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)
@@ -75,10 +85,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of(corsOrigins.split(",")));
-        configuration.setAllowedMethods(List.of("*"));
+
+        configuration.setAllowedOriginPatterns(Arrays.asList(corsOrigins.split(",")));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
@@ -86,4 +97,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }

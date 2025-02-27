@@ -8,7 +8,7 @@
 [http://delicious-hanni-danilobml-c0cd7d80.koyeb.app](http://delicious-hanni-danilobml-c0cd7d80.koyeb.app/swagger-ui/index.html)
 
 ## Swagger-UI OpenApi docs:
-[http://delicious-hanni-danilobml-c0cd7d80.koyeb.app/swagger](http://delicious-hanni-danilobml-c0cd7d80.koyeb.app/swagger-ui/index.html)
+[https://www.delicious-hanni-danilobml-c0cd7d80.koyeb.app/swagger-ui/index.html](https://delicious-hanni-danilobml-c0cd7d80.koyeb.app/swagger-ui/index.html)
 
 ## To Test:
 ### Login:
